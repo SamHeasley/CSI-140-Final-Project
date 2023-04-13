@@ -30,9 +30,20 @@ vector<vector<char>> playerMove(int choice, vector<vector<char>> board) {
 	return board;
 }
 
-int aiMove() {
-	//professor recommended "Monte carlo tree search"
-	return 0;
+vector<vector<char>> aiEasyMove(int ranDecision, vector<vector<char>> board) {
+    for (int i = 5; i >= 0; i--) {
+        if (board[ranDecision][i] == char(32)) {
+            board[ranDecision][i] = char(79);
+            return board;
+        }
+    }
+
+	return board;
+}
+
+int aiDifficultMove() {
+    //professor recommended "Monte carlo tree search"
+    return 0;
 }
 
 bool checkWinner() {
@@ -42,6 +53,7 @@ bool checkWinner() {
 
 int main() {
 	bool winner = false;
+    bool playerTurn = true;
 
 	char empty = 32;
 	char player = 88;
@@ -52,32 +64,28 @@ int main() {
 	int playerChoice;
 
 	while (!winner) {
-		//render the board for the player
-		renderBoard(board);
+        if (playerTurn == true) {
+            renderBoard(board);
 
-		//let the player choose a column
-		cout << "Pick a column(1-7): ";
-		cin >> playerChoice;
-		playerChoice--;
+            cout << "Pick a column(1-7): ";
+            playerChoice--;
 
-		//process the player's move and restart the turn if they choose wrong
-		boardHolder = board;
-		board = playerMove(playerChoice, board);
-		if (boardHolder == board) {
-			cout << "That choice was impossible" << endl;
-			continue;
-		}
+            board = playerMove(playerChoice, board);
 
 		//check if the player won
-		winner = checkWinner();
+            winner = checkWinner();
+            playerTurn = false;
+        }
+        else if (playerTurn == false){
+            renderBoard(board);
 
-		//give the AI its turn
+            //Makes a random move for the easy AI
+            int aiEasyChoice = rand() % 7;
+            board = aiEasyMove(aiEasyChoice, board);
 
-
-		//check if the AI won
-		winner = checkWinner();
-
-		//loop ends and restarts
+            winner = checkWinner();
+            playerTurn = true;
+        }
 	}
 
 	return 0;
