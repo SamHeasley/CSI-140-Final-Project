@@ -52,15 +52,32 @@ int main() {
 	int playerChoice;
 
 	while (!winner) {
+		//render the board for the player
 		renderBoard(board);
 
+		//let the player choose a column
 		cout << "Pick a column(1-7): ";
 		cin >> playerChoice;
 		playerChoice--;
 
+		//process the player's move and restart the turn if they choose wrong
+		boardHolder = board;
 		board = playerMove(playerChoice, board);
+		if (boardHolder == board) {
+			cout << "That choice was impossible" << endl;
+			continue;
+		}
 
+		//check if the player won
 		winner = checkWinner();
+
+		//give the AI its turn
+
+
+		//check if the AI won
+		winner = checkWinner();
+
+		//loop ends and restarts
 	}
 
 	return 0;
