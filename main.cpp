@@ -46,7 +46,51 @@ int aiDifficultMove() {
     return 0;
 }
 
-bool checkWinner() {
+bool checkWinner(vector<vector<char>> board) {
+	//vertical checks
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 7; col++) {
+			if (board[col][row] == char(79) && board[col][row + 1] == char(79) && board[col][row + 2] == char(79) && board[col][row + 3] == char(79)) {
+				return true;
+			}
+			if (board[col][row] == char(88) && board[col][row + 1] == char(88) && board[col][row + 2] == char(88) && board[col][row + 3] == char(88)) {
+				return true;
+			}
+		}
+	}
+	//horizontal checks
+	for (int row = 0; row < 6; row++) {
+		for (int col = 0; col < 4; col++) {
+			if (board[col][row] == char(79) && board[col + 1][row] == char(79) && board[col + 2][row] == char(79) && board[col + 3][row] == char(79)) {
+				return true;
+			}
+			if (board[col][row] == char(88) && board[col + 1][row] == char(88) && board[col + 2][row] == char(88) && board[col + 3][row] == char(88)) {
+				return true;
+			}
+		}
+	}
+	//forward slash : / checks
+	for (int row = 3; row < 6; row++) {
+		for (int col = 0; col < 4; col++) {
+			if (board[col][row] == char(79) && board[col + 1][row - 1] == char(79) && board[col + 2][row - 2] == char(79) && board[col + 3][row - 3] == char(79)) {
+				return true;
+			}
+			if (board[col][row] == char(88) && board[col + 1][row - 1] == char(88) && board[col + 2][row - 2] == char(88) && board[col + 3][row - 3] == char(88)) {
+				return true;
+			}
+		}
+	}
+	//back slah : \ checks
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 4; col++) {
+			if (board[col][row] == char(79) && board[col + 1][row + 1] == char(79) && board[col + 2][row + 2] == char(79) && board[col + 3][row + 3] == char(79)) {
+				return true;
+			}
+			if (board[col][row] == char(88) && board[col + 1][row + 1] == char(88) && board[col + 2][row + 2] == char(88) && board[col + 3][row + 3] == char(88)) {
+				return true;
+			}
+		}
+	}
 
 	return false;
 }
@@ -87,6 +131,8 @@ int main() {
             playerTurn = true;
         }
 	}
-
+	
+	renderBoard(board);
+	cout << "There is a winner!" << endl;
 	return 0;
 }
