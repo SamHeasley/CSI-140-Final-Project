@@ -31,19 +31,19 @@ vector<vector<char>> playerMove(int choice, vector<vector<char>> board) {
 }
 
 vector<vector<char>> aiEasyMove(int ranDecision, vector<vector<char>> board) {
-    for (int i = 5; i >= 0; i--) {
-        if (board[ranDecision][i] == char(32)) {
-            board[ranDecision][i] = char(79);
-            return board;
-        }
-    }
+	for (int i = 5; i >= 0; i--) {
+		if (board[ranDecision][i] == char(32)) {
+			board[ranDecision][i] = char(79);
+			return board;
+		}
+	}
 
 	return board;
 }
 
 int aiDifficultMove() {
-    //professor recommended "Monte carlo tree search"
-    return 0;
+	//professor recommended "Monte carlo tree search"
+	return 0;
 }
 
 bool checkWinner(vector<vector<char>> board) {
@@ -97,7 +97,7 @@ bool checkWinner(vector<vector<char>> board) {
 
 int main() {
 	bool winner = false;
-    bool playerTurn = true;
+	bool playerTurn = true;
 
 	char empty = 32;
 	char player = 88;
@@ -108,30 +108,32 @@ int main() {
 	int playerChoice;
 
 	while (!winner) {
-        if (playerTurn == true) {
-            renderBoard(board);
+		if (playerTurn == true) {
+			renderBoard(board);
 
-            cout << "Pick a column(1-7): ";
-            playerChoice--;
+			cout << "Pick a column(1-7): ";
+			cin >> playerChoice;
+			playerChoice--;
 
-            board = playerMove(playerChoice, board);
+			board = playerMove(playerChoice, board);
 
-		//check if the player won
-            winner = checkWinner();
-            playerTurn = false;
-        }
-        else if (playerTurn == false){
-            renderBoard(board);
+			//check if the player won
+			winner = checkWinner(board);
+			playerTurn = false;
+		}
+		else if (playerTurn == false) {
+			renderBoard(board);
 
-            //Makes a random move for the easy AI
-            int aiEasyChoice = rand() % 7;
-            board = aiEasyMove(aiEasyChoice, board);
+			//Makes a random move for the easy AI
+			int aiEasyChoice = rand() % 7;
+			board = aiEasyMove(aiEasyChoice, board);
+			cout << "AI chose" << aiEasyChoice << endl;
 
-            winner = checkWinner();
-            playerTurn = true;
-        }
+			winner = checkWinner(board);
+			playerTurn = true;
+		}
 	}
-	
+
 	renderBoard(board);
 	cout << "There is a winner!" << endl;
 	return 0;
