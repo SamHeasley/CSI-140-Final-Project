@@ -5,15 +5,15 @@ using namespace std;
 
 vector<vector<char>> renderBoard(vector<vector<char>> board) {
 	for (int i = 0; i < 8; i++) {
-		cout << endl;
+		std::cout << endl;
 	}
 	for (int i = 0; i < 6; i++) {
-		cout << "| ";
+		std::cout << "| ";
 		for (int j = 0; j < 7; j++) {
-			cout << board[j][i] << " | ";
+			std::cout << board[j][i] << " | ";
 		}
-		cout << endl;
-		cout << "-----------------------------" << endl;
+		std::cout << endl;
+		std::cout << "-----------------------------" << endl;
 	}
 
 	return board;
@@ -106,12 +106,17 @@ int main() {
 	vector<vector<char>> board = vector<vector<char>>(7, vector<char>(6, empty));
 
 	int playerChoice;
+	int gamemode;
 
-	while (!winner) {
+	std::cout << "Welcome to C++ Connect Four" << endl << "Type 1 to play the computer. Type 2 to play agianst another player.  " << endl;
+	cin >> gamemode;
+
+
+	while (!winner && gamemode == 1) {
 		if (playerTurn == true) {
 			renderBoard(board);
 
-			cout << "Pick a column(1-7): ";
+			std::cout << "Pick a column(1-7): ";
 			cin >> playerChoice;
 			playerChoice--;
 
@@ -127,14 +132,42 @@ int main() {
 			//Makes a random move for the easy AI
 			int aiEasyChoice = rand() % 7;
 			board = aiEasyMove(aiEasyChoice, board);
-			cout << "AI chose" << aiEasyChoice << endl;
+			std::cout << "AI chose " << aiEasyChoice << endl;
 
+			winner = checkWinner(board);
+			playerTurn = true;
+		}
+	}
+	while (!winner && gamemode == 2) {
+		if (playerTurn == true) {
+			renderBoard(board);
+
+			std::cout << "P1 - Pick a column(1-7): ";
+			cin >> playerChoice;
+			playerChoice--;
+
+			board = playerMove(playerChoice, board);
+
+			//check if the player won
+			winner = checkWinner(board);
+			playerTurn = false;
+		}
+		else if (playerTurn == false) {
+			renderBoard(board);
+
+			std::cout << "P2 - Pick a column(1-7): ";
+			cin >> playerChoice;
+			playerChoice--;
+
+			board = playerMove(playerChoice, board);
+
+			//check if the player won
 			winner = checkWinner(board);
 			playerTurn = true;
 		}
 	}
 
 	renderBoard(board);
-	cout << "There is a winner!" << endl;
+	std::cout << "There is a winner!" << endl;
 	return 0;
 }
