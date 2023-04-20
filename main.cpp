@@ -7,6 +7,7 @@ vector<vector<char>> renderBoard(vector<vector<char>> board) {
 	for (int i = 0; i < 8; i++) {
 		std::cout << endl;
 	}
+	std::cout << "--1---2---3---4---5---6---7--" << endl;
 	for (int i = 0; i < 6; i++) {
 		std::cout << "| ";
 		for (int j = 0; j < 7; j++) {
