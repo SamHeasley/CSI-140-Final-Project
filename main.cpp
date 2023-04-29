@@ -3,172 +3,379 @@
 
 using namespace std;
 
+//Creates a blank board for the players
 vector<vector<char>> renderBoard(vector<vector<char>> board) {
-	for (int i = 0; i < 8; i++) {
-		std::cout << endl;
-	}
-	std::cout << "--1---2---3---4---5---6---7--" << endl;
-	for (int i = 0; i < 6; i++) {
-		std::cout << "| ";
-		for (int j = 0; j < 7; j++) {
-			std::cout << board[j][i] << " | ";
-		}
-		std::cout << endl;
-		std::cout << "-----------------------------" << endl;
-	}
+    for (int i = 0; i < 8; i++) {
+        cout << endl;
+    }
+    cout << "--1---2---3---4---5---6---7--" << endl;
+    for (int i = 0; i < 6; i++) {
+        cout << "| ";
+        for (int j = 0; j < 7; j++) {
+            cout << board[j][i] << " | ";
+        }
+        cout << endl;
+        cout << "-----------------------------" << endl;
+    }
 
-	return board;
+    return board;
 }
 
-vector<vector<char>> playerMove(int choice, vector<vector<char>> board) {
-	for (int i = 5; i >= 0; i--) {
-		if (board[choice][i] == char(32)) {
-			board[choice][i] = char(88);
-			return board;
-		}
-	}
-
-	return board;
-}
-
-vector<vector<char>> aiEasyMove(int ranDecision, vector<vector<char>> board) {
-	for (int i = 5; i >= 0; i--) {
-		if (board[ranDecision][i] == char(32)) {
-			board[ranDecision][i] = char(79);
-			return board;
-		}
-	}
-
-	return board;
-}
-
-int aiDifficultMove() {
-	//professor recommended "Monte carlo tree search"
-	return 0;
-}
-
+//Checks for the different wins that occur in connect four
 bool checkWinner(vector<vector<char>> board) {
-	//vertical checks
-	for (int row = 0; row < 3; row++) {
-		for (int col = 0; col < 7; col++) {
-			if (board[col][row] == char(79) && board[col][row + 1] == char(79) && board[col][row + 2] == char(79) && board[col][row + 3] == char(79)) {
-				return true;
-			}
-			if (board[col][row] == char(88) && board[col][row + 1] == char(88) && board[col][row + 2] == char(88) && board[col][row + 3] == char(88)) {
-				return true;
-			}
-		}
-	}
-	//horizontal checks
-	for (int row = 0; row < 6; row++) {
-		for (int col = 0; col < 4; col++) {
-			if (board[col][row] == char(79) && board[col + 1][row] == char(79) && board[col + 2][row] == char(79) && board[col + 3][row] == char(79)) {
-				return true;
-			}
-			if (board[col][row] == char(88) && board[col + 1][row] == char(88) && board[col + 2][row] == char(88) && board[col + 3][row] == char(88)) {
-				return true;
-			}
-		}
-	}
-	//forward slash : / checks
-	for (int row = 3; row < 6; row++) {
-		for (int col = 0; col < 4; col++) {
-			if (board[col][row] == char(79) && board[col + 1][row - 1] == char(79) && board[col + 2][row - 2] == char(79) && board[col + 3][row - 3] == char(79)) {
-				return true;
-			}
-			if (board[col][row] == char(88) && board[col + 1][row - 1] == char(88) && board[col + 2][row - 2] == char(88) && board[col + 3][row - 3] == char(88)) {
-				return true;
-			}
-		}
-	}
-	//back slah : \ checks
-	for (int row = 0; row < 3; row++) {
-		for (int col = 0; col < 4; col++) {
-			if (board[col][row] == char(79) && board[col + 1][row + 1] == char(79) && board[col + 2][row + 2] == char(79) && board[col + 3][row + 3] == char(79)) {
-				return true;
-			}
-			if (board[col][row] == char(88) && board[col + 1][row + 1] == char(88) && board[col + 2][row + 2] == char(88) && board[col + 3][row + 3] == char(88)) {
-				return true;
-			}
-		}
-	}
+    //vertical checks
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 7; col++) {
+            if (board[col][row] == char(79) && board[col][row + 1] == char(79) && board[col][row + 2] == char(79) && board[col][row + 3] == char(79)) {
+                return true;
+            }
+            if (board[col][row] == char(88) && board[col][row + 1] == char(88) && board[col][row + 2] == char(88) && board[col][row + 3] == char(88)) {
+                return true;
+            }
+        }
+    }
+    //horizontal checks
+    for (int row = 0; row < 6; row++) {
+        for (int col = 0; col < 4; col++) {
+            if (board[col][row] == char(79) && board[col + 1][row] == char(79) && board[col + 2][row] == char(79) && board[col + 3][row] == char(79)) {
+                return true;
+            }
+            if (board[col][row] == char(88) && board[col + 1][row] == char(88) && board[col + 2][row] == char(88) && board[col + 3][row] == char(88)) {
+                return true;
+            }
+        }
+    }
+    //forward slash : / checks
+    for (int row = 3; row < 6; row++) {
+        for (int col = 0; col < 4; col++) {
+            if (board[col][row] == char(79) && board[col + 1][row - 1] == char(79) && board[col + 2][row - 2] == char(79) && board[col + 3][row - 3] == char(79)) {
+                return true;
+            }
+            if (board[col][row] == char(88) && board[col + 1][row - 1] == char(88) && board[col + 2][row - 2] == char(88) && board[col + 3][row - 3] == char(88)) {
+                return true;
+            }
+        }
+    }
+    //back slash : \ checks
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 4; col++) {
+            if (board[col][row] == char(79) && board[col + 1][row + 1] == char(79) && board[col + 2][row + 2] == char(79) && board[col + 3][row + 3] == char(79)) {
+                return true;
+            }
+            if (board[col][row] == char(88) && board[col + 1][row + 1] == char(88) && board[col + 2][row + 2] == char(88) && board[col + 3][row + 3] == char(88)) {
+                return true;
+            }
+        }
+    }
 
-	return false;
+    return false;
+}
+
+//Checks to see if there's a draw in the game
+bool checkDraw(vector<vector<char>> board) {
+    //Looks to see if every spot in the top row is filled
+    for (int col = 0; col < 7; col++) {
+        if (board[col][0] == char(32)) {
+            //Returns if there isn't a draw
+            return false;
+        }
+    }
+
+    //Returns if there's a draw
+    return true;
+}
+
+//Makes sure the player's move is legal
+bool legalMove(int choice, vector<vector<char>> board) {
+    choice --;
+    //Checks if the top of the column is already filled
+    if (board[choice][0] != char(32)) {
+        //Returns illegal move
+        return false;
+    }
+
+    //Returns legal move
+    return true;
+}
+
+//Places player one's piece based on their input
+vector<vector<char>> playerMoveOne(int choice, vector<vector<char>> board) {
+    //Places the player's piece in the most bottom row in the selected column
+    for (int i = 5; i >= 0; i--) {
+        if (board[choice][i] == char(32)) {
+            board[choice][i] = char(88);
+            //Returns the board with the move
+            return board;
+        }
+    }
+
+    //Returns the board without the move
+    return board;
+}
+
+//Places player two's piece based on their input
+vector<vector<char>> playerMoveTwo(int choice, vector<vector<char>> board) {
+    //Places the player's piece in the most bottom row in the selected column
+    for (int i = 5; i >= 0; i--) {
+        if (board[choice][i] == char(32)) {
+            board[choice][i] = char(79);
+            //Returns the board with the move
+            return board;
+        }
+    }
+
+    //Returns the board without the move
+    return board;
+}
+
+//AI for single player connect four
+//Stops winning moves for the player
+//Looks for winning moves for itself
+//Makes a greedy move if there are no winning moves for either player
+vector<vector<char>> AIMove(vector<vector<char>> board) {
+    int choice;
+    bool foundMove = false;
+
+    // Check for winning move for computer
+    for (int col = 0; col < 7 && !foundMove; col++) {
+        vector<vector<char>> tempBoard = board;
+        for (int row = 5; row >= 0; row--) {
+            if (tempBoard[col][row] == char(32)) {
+                tempBoard[col][row] = char(88);
+                if (checkWinner(tempBoard)) {
+                    choice = col;
+                    foundMove = true;
+                    break;
+                }
+                tempBoard[col][row] = char(32);
+                break;
+            }
+        }
+    }
+
+    // Check for winning move for player
+    if (!foundMove) {
+        for (int col = 0; col < 7 && !foundMove; col++) {
+            vector<vector<char>> tempBoard = board;
+            for (int row = 5; row >= 0; row--) {
+                if (tempBoard[col][row] == char(32)) {
+                    tempBoard[col][row] = char(79);
+                    if (checkWinner(tempBoard)) {
+                        choice = col;
+                        foundMove = true;
+                        break;
+                    }
+                    tempBoard[col][row] = char(32);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Greedy move - choose first available slot in center column
+    if (!foundMove) {
+        if (board[3][5] == char(32)) {
+            choice = 3;
+        }
+        else if (board[2][5] == char(32)) {
+            choice = 2;
+        }
+        else if (board[4][5] == char(32)) {
+            choice = 4;
+        }
+        else if (board[1][5] == char(32)) {
+            choice = 1;
+        }
+        else if (board[5][5] == char(32)) {
+            choice = 5;
+        }
+        else if (board[0][5] == char(32)) {
+            choice = 0;
+        }
+        else if (board[6][5] == char(32)) {
+            choice = 6;
+        }
+    }
+
+    //Checks to see if the column is full
+    while (board[choice][0] != char(32)) {
+        choice = rand() % 7; // Choose a new column
+    }
+
+    // Make the move and return the updated board
+    for (int row = 5; row >= 0; row--) {
+        if (board[choice][row] == char(32)) {
+            board[choice][row] = char(79);
+            break;
+        }
+    }
+
+    //Returns the board with the AI move
+    return board;
 }
 
 int main() {
-	bool winner = false;
-	bool playerTurn = true;
+    bool winner = false;
+    bool playerTurn = true;
+    bool validOption;
 
-	char empty = 32;
-	char player = 88;
-	char ai = 79;
+    char empty = 32;
 
-	vector<vector<char>> board = vector<vector<char>>(7, vector<char>(6, empty));
+    vector<vector<char>> board = vector<vector<char>>(7, vector<char>(6, empty));
 
-	int playerChoice;
-	int gamemode;
+    int playerChoice;
+    int gamemode;
 
-	std::cout << "Welcome to C++ Connect Four" << endl << "Type 1 to play the computer. Type 2 to play agianst another player.  " << endl;
-	cin >> gamemode;
+    cout << "Welcome to C++ Connect Four" << endl << "Type 1 to play the computer. Type 2 to play against another player.  " << endl;
+    cin >> gamemode;
 
 
-	while (!winner && gamemode == 1) {
-		if (playerTurn == true) {
-			renderBoard(board);
+    //Gamemode One: Player V.S. Computer
+    while (!winner && gamemode == 1) {
+        if (playerTurn == true) {
 
-			std::cout << "Pick a column(1-7): ";
-			cin >> playerChoice;
-			playerChoice--;
+            validOption = false;
 
-			board = playerMove(playerChoice, board);
+            //Makes sure choice was a valid option
+            while (!validOption) {
+                renderBoard(board);
+                cout << "Pick a column(1-7): ";
+                cin >> playerChoice;
+                if (playerChoice > 0 && playerChoice < 8) {
+                    //Makes sure the column isn't full
+                    if (legalMove(playerChoice, board) == true) {
+                        playerChoice--;
+                        validOption = true;
+                    } else {
+                        cout << "NOT A VALID MOVE" << endl;
+                    }
+                }
+                else{
+                    cout << "NOT A VALID OPTION" << endl;
+                }
+            }
 
-			//check if the player won
-			winner = checkWinner(board);
-			playerTurn = false;
-		}
-		else if (playerTurn == false) {
-			renderBoard(board);
+            //Adds new move to the board
+            board = playerMoveOne(playerChoice, board);
 
-			//Makes a random move for the easy AI
-			int aiEasyChoice = rand() % 7;
-			board = aiEasyMove(aiEasyChoice, board);
-			std::cout << "AI chose " << aiEasyChoice << endl;
+            //Looks for a draw if no more moves can be made
+            if (checkDraw(board)) {
+                cout << "The game is a draw!" << endl;
+                return 0;
+            }
 
-			winner = checkWinner(board);
-			playerTurn = true;
-		}
-	}
-	while (!winner && gamemode == 2) {
-		if (playerTurn == true) {
-			renderBoard(board);
+            //Looks to see if there's a winner
+            if (checkWinner(board)) {
+                winner = checkWinner(board);
+            }
 
-			std::cout << "P1 - Pick a column(1-7): ";
-			cin >> playerChoice;
-			playerChoice--;
+            //Switches turn to the other player
+            playerTurn = false;
+        }
+        else if (playerTurn == false) {
+            renderBoard(board);
 
-			board = playerMove(playerChoice, board);
+            //Has the computer make a move
+            board = AIMove(board);
 
-			//check if the player won
-			winner = checkWinner(board);
-			playerTurn = false;
-		}
-		else if (playerTurn == false) {
-			renderBoard(board);
+            //Looks for a draw if no more moves can be made
+            if (checkDraw(board)) {
+                cout << "The game is a draw!" << endl;
+                return 0;
+            }
 
-			std::cout << "P2 - Pick a column(1-7): ";
-			cin >> playerChoice;
-			playerChoice--;
+            //Looks to see if there's a winner
+            if (checkWinner(board)) {
+                winner = checkWinner(board);
+            }
 
-			board = playerMove(playerChoice, board);
+            //Switches turn to the other player
+            playerTurn = true;
+        }
+    }
+    //Gamemode Two: Player V.S. Player
+    while (!winner && gamemode == 2) {
+        if (playerTurn == true) {
+            validOption = false;
 
-			//check if the player won
-			winner = checkWinner(board);
-			playerTurn = true;
-		}
-	}
+            //Makes sure choice was a valid option
+            while (!validOption) {
+                renderBoard(board);
+                cout << "Pick a column(1-7): ";
+                cin >> playerChoice;
+                if (playerChoice > 0 && playerChoice < 8) {
+                    //Makes sure the column isn't full
+                    if (legalMove(playerChoice, board) == true) {
+                        playerChoice--;
+                        validOption = true;
+                    } else {
+                        cout << "NOT A VALID MOVE" << endl;
+                    }
+                }
+                else{
+                    cout << "NOT A VALID OPTION" << endl;
+                }
+            }
 
-	renderBoard(board);
-	std::cout << "There is a winner!" << endl;
-	return 0;
+            //Adds new move to the board
+            board = playerMoveOne(playerChoice, board);
+
+            //Looks for a draw if no more moves can be made
+            if (checkDraw(board)) {
+                cout << "The game is a draw!" << endl;
+                return 0;
+            }
+
+            //Looks to see if there's a winner
+            if (checkWinner(board)) {
+                winner = checkWinner(board);
+            }
+
+            //Switches turn to the other player
+            playerTurn = false;
+        }
+        else if (playerTurn == false) {
+            validOption = false;
+
+            //Makes sure choice was a valid option
+            while (!validOption) {
+                renderBoard(board);
+                cout << "Pick a column(1-7): ";
+                cin >> playerChoice;
+                if (playerChoice > 0 && playerChoice < 8) {
+                    //Makes sure the column isn't full
+                    if (legalMove(playerChoice, board) == true) {
+                        playerChoice--;
+                        validOption = true;
+                    } else {
+                        cout << "NOT A VALID MOVE" << endl;
+                    }
+                }
+                else{
+                    cout << "NOT A VALID OPTION" << endl;
+                }
+            }
+
+            //Adds new move to the board
+            board = playerMoveTwo(playerChoice, board);
+
+            //Looks for a draw if no more moves can be made
+            if (checkDraw(board)) {
+                cout << "The game is a draw!" << endl;
+                return 0;
+            }
+
+            //Looks to see if there's a winner
+            if (checkWinner(board)) {
+                winner = checkWinner(board);
+            }
+
+            //Switches turn to the other player
+            playerTurn = true;
+        }
+    }
+
+    renderBoard(board);
+    cout << "There is a winner!" << endl;
+    return 0;
 }
