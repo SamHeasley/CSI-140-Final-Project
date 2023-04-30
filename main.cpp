@@ -228,8 +228,9 @@ vector<vector<char>> AIMove(vector<vector<char>> board) {
 
 int main() {
     connectFourHeader header;
-    bool winner = false;
-    bool playerTurn = true;
+
+    bool winner = header.winner;
+    bool playerTurn = header.playerTurn;
     bool validOption;
 
     char empty = 32;
