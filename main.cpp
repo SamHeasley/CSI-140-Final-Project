@@ -96,7 +96,7 @@ int main() {
             //Makes sure choice was a valid option
             while (!validOption) {
                 renderBoard(board);
-                cout << "Pick a column(1-7): ";
+                cout << "P1: Pick a column(1-7): ";
                 cin >> playerChoice;
                 if (playerChoice > 0 && playerChoice < 8) {
                     //Makes sure the column isn't full
@@ -136,7 +136,7 @@ int main() {
             //Makes sure choice was a valid option
             while (!validOption) {
                 renderBoard(board);
-                cout << "Pick a column(1-7): ";
+                cout << "P2: Pick a column(1-7): ";
                 cin >> playerChoice;
                 if (playerChoice > 0 && playerChoice < 8) {
                     //Makes sure the column isn't full
