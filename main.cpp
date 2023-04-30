@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
+#include "Connect4.h"
 
 using namespace std;
+using namespace connectFour;
 
 //Creates a blank board for the players
 vector<vector<char>> renderBoard(vector<vector<char>> board) {
@@ -225,13 +227,14 @@ vector<vector<char>> AIMove(vector<vector<char>> board) {
 }
 
 int main() {
+    connectFourHeader header;
     bool winner = false;
     bool playerTurn = true;
     bool validOption;
 
     char empty = 32;
 
-    vector<vector<char>> board = vector<vector<char>>(7, vector<char>(6, empty));
+    vector<vector<char>> board = header.board;
 
     int playerChoice;
     int gamemode;
