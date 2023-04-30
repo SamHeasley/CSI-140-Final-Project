@@ -5,7 +5,7 @@
 using namespace std;
 using namespace connectFour;
 
-//Creates a blank board for the players
+//randers the board for the players. by Sam
 vector<vector<char>> renderBoard(vector<vector<char>> board) {
     for (int i = 0; i < 8; i++) {
         cout << endl;
@@ -23,7 +23,7 @@ vector<vector<char>> renderBoard(vector<vector<char>> board) {
     return board;
 }
 
-//Checks for the different wins that occur in connect four
+//Checks for the different wins that occur in connect four. By Sam
 bool checkWinner(vector<vector<char>> board) {
     //vertical checks
     for (int row = 0; row < 3; row++) {
@@ -73,7 +73,7 @@ bool checkWinner(vector<vector<char>> board) {
     return false;
 }
 
-//Checks to see if there's a draw in the game
+//Checks to see if there's a draw in the game. By Caleb
 bool checkDraw(vector<vector<char>> board) {
     //Looks to see if every spot in the top row is filled
     for (int col = 0; col < 7; col++) {
@@ -87,7 +87,7 @@ bool checkDraw(vector<vector<char>> board) {
     return true;
 }
 
-//Makes sure the player's move is legal
+//Makes sure the player's move is legal. By Caleb
 bool legalMove(int choice, vector<vector<char>> board) {
     choice--;
     //Checks if the top of the column is already filled
@@ -100,7 +100,7 @@ bool legalMove(int choice, vector<vector<char>> board) {
     return true;
 }
 
-//Places player one's piece based on their input
+//Places player one's piece based on their input. By Sam
 vector<vector<char>> playerMoveOne(int choice, vector<vector<char>> board) {
     //Places the player's piece in the most bottom row in the selected column
     for (int i = 5; i >= 0; i--) {
@@ -115,7 +115,7 @@ vector<vector<char>> playerMoveOne(int choice, vector<vector<char>> board) {
     return board;
 }
 
-//Places player two's piece based on their input
+//Places player two's piece based on their input. By Caleb
 vector<vector<char>> playerMoveTwo(int choice, vector<vector<char>> board) {
     //Places the player's piece in the most bottom row in the selected column
     for (int i = 5; i >= 0; i--) {
@@ -130,7 +130,7 @@ vector<vector<char>> playerMoveTwo(int choice, vector<vector<char>> board) {
     return board;
 }
 
-//AI for single player connect four
+//AI for single player connect four. By Caleb
 //Stops winning moves for the player
 //Looks for winning moves for itself
 //Makes a greedy move if there are no winning moves for either player
@@ -174,7 +174,7 @@ vector<vector<char>> AIMove(vector<vector<char>> board) {
         }
     }
 
-    // Greedy move - choose first available slot in center column
+    // Greedy move - choose first available slot in center column. By both members
     if (!foundMove) {
         choice = rand();
         if (choice % 10 == 0) {
@@ -226,6 +226,7 @@ vector<vector<char>> AIMove(vector<vector<char>> board) {
     return board;
 }
 
+//By both members
 int main() {
     connectFourHeader header;
 
