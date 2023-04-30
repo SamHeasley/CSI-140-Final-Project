@@ -87,7 +87,7 @@ bool checkDraw(vector<vector<char>> board) {
 
 //Makes sure the player's move is legal
 bool legalMove(int choice, vector<vector<char>> board) {
-    choice --;
+    choice--;
     //Checks if the top of the column is already filled
     if (board[choice][0] != char(32)) {
         //Returns illegal move
@@ -174,25 +174,35 @@ vector<vector<char>> AIMove(vector<vector<char>> board) {
 
     // Greedy move - choose first available slot in center column
     if (!foundMove) {
-        if (board[3][5] == char(32)) {
+        choice = rand();
+        if (choice % 10 == 0) {
             choice = 3;
         }
-        else if (board[2][5] == char(32)) {
+        else if (choice % 9 == 0) {
             choice = 2;
         }
-        else if (board[4][5] == char(32)) {
+        else if (choice % 8 == 0) {
             choice = 4;
         }
-        else if (board[1][5] == char(32)) {
+        else if (choice % 7 == 0) {
+            choice = 3;
+        }
+        else if (choice % 6 == 0) {
+            choice = 2;
+        }
+        else if (choice % 5 == 0) {
+            choice = 4;
+        }
+        else if (choice % 4 == 0) {
             choice = 1;
         }
-        else if (board[5][5] == char(32)) {
+        else if (choice % 3 == 0) {
             choice = 5;
         }
-        else if (board[0][5] == char(32)) {
+        else if (choice % 2 == 0) {
             choice = 0;
         }
-        else if (board[6][5] == char(32)) {
+        else if (choice % 1 == 0) {
             choice = 6;
         }
     }
@@ -232,6 +242,7 @@ int main() {
 
     //Gamemode One: Player V.S. Computer
     while (!winner && gamemode == 1) {
+        srand(time(NULL));
         if (playerTurn == true) {
 
             validOption = false;
@@ -246,11 +257,12 @@ int main() {
                     if (legalMove(playerChoice, board) == true) {
                         playerChoice--;
                         validOption = true;
-                    } else {
+                    }
+                    else {
                         cout << "NOT A VALID MOVE" << endl;
                     }
                 }
-                else{
+                else {
                     cout << "NOT A VALID OPTION" << endl;
                 }
             }
@@ -308,11 +320,12 @@ int main() {
                     if (legalMove(playerChoice, board) == true) {
                         playerChoice--;
                         validOption = true;
-                    } else {
+                    }
+                    else {
                         cout << "NOT A VALID MOVE" << endl;
                     }
                 }
-                else{
+                else {
                     cout << "NOT A VALID OPTION" << endl;
                 }
             }
@@ -347,11 +360,12 @@ int main() {
                     if (legalMove(playerChoice, board) == true) {
                         playerChoice--;
                         validOption = true;
-                    } else {
+                    }
+                    else {
                         cout << "NOT A VALID MOVE" << endl;
                     }
                 }
-                else{
+                else {
                     cout << "NOT A VALID OPTION" << endl;
                 }
             }
