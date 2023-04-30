@@ -1,4 +1,5 @@
 #include <vector>
+
 //All by Sam
 namespace connectFour {
 	class connectFourHeader {
